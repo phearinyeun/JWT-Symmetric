@@ -1,6 +1,5 @@
 package Spring.Security.jwtsymmetrickey.config;
 
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -44,8 +43,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().hasAnyAuthority("SCOPE_READ"))
-                .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").hasRole("USER")
+                        .anyRequest()
+                        .hasAnyAuthority("SCOPE_READ"))
+                .sessionManagement(session ->session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(withDefaults())
                 .build();
@@ -55,6 +58,8 @@ public class SecurityConfig {
     JwtEncoder jwtEncoder(){
         return new NimbusJwtEncoder(new ImmutableSecret<>(jwtKey.getBytes()));
     }
+
+
 
     @Bean
     public JwtDecoder jwtDecoder() {
