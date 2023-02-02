@@ -20,4 +20,5 @@ public class AuthController {
     public String token (Authentication authentication){
         return tokenService.generateToken(authentication);
     }
+
 }

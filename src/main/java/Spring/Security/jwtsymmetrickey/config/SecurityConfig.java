@@ -35,7 +35,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(
                 User.withUsername("test")
                         .password("{noop}password")
-                        .authorities("READ", "ROLE_USER")
+                        .authorities("RE AD", "ROLE_USER")
                         .build());
     }
 
@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").hasRole("USER")
+                        .requestMatchers("/api/users/**").permitAll()
                         .anyRequest()
                         .hasAnyAuthority("SCOPE_READ"))
                 .sessionManagement(session ->session

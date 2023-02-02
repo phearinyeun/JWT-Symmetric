@@ -13,7 +13,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home (Authentication authentication) {
-            return greeting + " " + authentication.getName();
+            return greeting + "  " + authentication.getName();
     }
-
 }
