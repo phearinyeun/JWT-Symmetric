@@ -48,8 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/**").permitAll()
                         .anyRequest()
                         .hasAnyAuthority("SCOPE_READ"))
-                .sessionManagement(session ->session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .httpBasic(withDefaults())
                 .build();

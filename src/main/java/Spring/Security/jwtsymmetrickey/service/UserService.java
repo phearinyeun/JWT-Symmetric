@@ -3,7 +3,6 @@ package Spring.Security.jwtsymmetrickey.service;
 import Spring.Security.jwtsymmetrickey.model.User;
 import Spring.Security.jwtsymmetrickey.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -21,5 +20,8 @@ public class UserService {
 
     public List<User> getAllUser(User user){
         return userRepository.findAll();
+    }
+    public List<User> findByFirstname(String firstname){
+        return userRepository.findByFirstname(firstname);
     }
 }
